@@ -18,6 +18,9 @@ const About: NextPage = () => {
   if (session) {
     return (
       <>
+        <div>
+          Signed in as {session.user.userId} <br />
+        </div>
         <div>This is Login Required Page</div>
         <a href="/">Link to top page</a>
       </>

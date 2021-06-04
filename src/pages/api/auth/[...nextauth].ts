@@ -1,15 +1,14 @@
-import NextAuth, { CredentialsType, Session } from 'next-auth'
+import NextAuth, { CredentialsType, JWT, User } from 'next-auth'
 import Providers from 'next-auth/providers'
 
-async function getUser(_credentials: {
+async function getUser(credentials: {
   userId: string
   password: string
-}): Promise<Session['user']> {
+}): Promise<User> {
   // should get user from DB
 
   return {
-    userId: 'test',
-    name: 'userName',
+    userId: credentials.userId,
   }
 }
 
@@ -42,4 +41,25 @@ export default NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt(token, user) {
+      const tokenResult = user
+        ? {
+            ...token,
+            userId: user.userId,
+          }
+        : token
+
+      return tokenResult
+    },
+    async session(session, user) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          userId: (user as JWT).userId,
+        },
+      }
+    },
+  },
 })
