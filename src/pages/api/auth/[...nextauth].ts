@@ -5,6 +5,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 const cookieDomain = process.env.COOKIE_DOMAIN
 const sessionSecret = process.env.SESSION_SECRET
 
+const cookieSecurePrefix = isProduction ? '__Secure-' : ''
+
 async function getUser(credentials: {
   userId: string
   password: string
@@ -69,7 +71,7 @@ export default NextAuth({
   secret: sessionSecret,
   cookies: {
     sessionToken: {
-      name: `__Secure-next-auth.session-token`,
+      name: `${cookieSecurePrefix}next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
