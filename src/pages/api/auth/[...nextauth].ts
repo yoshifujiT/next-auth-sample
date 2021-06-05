@@ -3,6 +3,7 @@ import Providers from 'next-auth/providers'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const cookieDomain = process.env.COOKIE_DOMAIN
+const sessionSecret = process.env.SESSION_SECRET
 
 async function getUser(credentials: {
   userId: string
@@ -65,6 +66,7 @@ export default NextAuth({
       }
     },
   },
+  secret: sessionSecret,
   cookies: {
     sessionToken: {
       name: `__Secure-next-auth.session-token`,
