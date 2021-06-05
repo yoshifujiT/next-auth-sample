@@ -1,6 +1,9 @@
 import NextAuth, { CredentialsType, JWT, User } from 'next-auth'
 import Providers from 'next-auth/providers'
 
+const isProduction = process.env.NODE_ENV === 'production'
+const cookieDomain = process.env.COOKIE_DOMAIN
+
 async function getUser(credentials: {
   userId: string
   password: string
@@ -60,6 +63,18 @@ export default NextAuth({
           userId: (user as JWT).userId,
         },
       }
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: isProduction,
+        domain: cookieDomain,
+      },
     },
   },
 })
