@@ -76,15 +76,5 @@ export default NextAuth({
         domain: cookieDomain,
       },
     },
-    // csrfToken: {
-    //   name: `next-auth.csrf-token`,
-    //   options: {
-    //     httpOnly: true,
-    //     sameSite: 'lax',
-    //     path: '/',
-    //     secure: isProduction,
-    //     domain: cookieDomain,
-    //   },
-    // },
   },
 })
