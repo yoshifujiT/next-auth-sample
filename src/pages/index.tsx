@@ -7,6 +7,12 @@ const Index: NextPage = () => {
   const [userId, setUserId] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  React.useEffect(() => {
+    console.log(
+      process.env.NEXT_PUBLIC_APP_BASE_URL || 'APP Base URL is not found'
+    )
+  }, [])
+
   const handleSignOut = () => {
     signOut()
   }
